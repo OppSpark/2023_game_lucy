@@ -2,6 +2,7 @@ import * as THREE from '../source/three.module.js';
 import makeCamera from '../libs/camera.js';
 import { makeMesh, makeMesh2 } from '../libs/mesh.js';
 import meshanim from '../libs/anim.js';
+import makelight from '../libs/light.js';
 
 const playscene1 = async (renderer) => {
     // 씬 생성
@@ -11,8 +12,7 @@ const playscene1 = async (renderer) => {
     const camera = makeCamera();
 
     // 라이트 생성
-    const light = new THREE.PointLight(0xffffff, 80, 1000);
-    light.position.set(0, 2, -5);
+    const light = makelight();
     scene1.add(light);
 
     // 메쉬 생성
