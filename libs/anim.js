@@ -1,6 +1,6 @@
 import * as THREE from '../source/three.module.js';
 
-export class ApngAnimbuilder{
+export class pngAnimBuilder{
     constructor(sprite, imgpath) {
         this.sprite = sprite;
         this.imgpath = imgpath;
@@ -49,6 +49,6 @@ export class ApngAnimbuilder{
 
 }
 
-export default ApngAnimbuilder;
+export { pngAnimBuilder };
 // sepAnimbuilder
 // coloranimbuilder

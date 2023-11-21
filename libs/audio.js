@@ -1,4 +1,7 @@
-class Audio {
+export class AudioBuilder {
+    // 1. 탭간격은 4로 통일 합니다
+    // 2. 셋 컴포넌트는 동작을 가능한 하지 않도록 합니다
+    // 3. 가능하면 리스너와 로더를 분리합니다
     constructor() {
       this.listener = new THREE.AudioListener();
       this.sound = new THREE.Audio(this.listener);

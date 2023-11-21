@@ -1,27 +1,8 @@
 import * as THREE from '../source/three.module.js';
 
-
-/*
-const makeCamera = () => {
-    const camera = new THREE.PerspectiveCamera(
-        75, window.innerWidth / window.innerHeight,0.1, 1000   //화각
-    );
-    camera.position.set(0,-5, 0);  //좌 우, 앞 뒤 ,상 하
-    camera.rotation.set(Math.PI / 5, 0, 0);  //수직, 수평, 회전
-
-    return camera;
-}
-*/
-
-
-
-/*
-    * ==================[빌더 패턴 구현]==================
-*/
-
-
-
-export class camera_builder{
+export class CameraBuilder {
+    // 1. PerspectiveCamera 이외의 카메라도 지원하도록 합니다
+    // 2. position, rotation을 한번에 설정할 수 있도록 합니다
     constructor(){
         this.fov = 75;
         this.near = 0.1;
@@ -35,6 +16,7 @@ export class camera_builder{
         this.rot_y = 0;
         this.rot_z = 0;
     }
+
     setFov(fov){
         this.fov = fov;
         return this;
@@ -49,9 +31,6 @@ export class camera_builder{
         this.far = far;
         return this;
     }
-    
-
-
 
     setPosX(pos_x){
         this.pos_x = pos_x;
@@ -67,9 +46,6 @@ export class camera_builder{
         this.pos_z = pos_z;
         return this;
     }
-
-
-
 
     setRotX(rot_x){
         this.rot_x = rot_x;
@@ -87,15 +63,14 @@ export class camera_builder{
     }
 
     build(){
+        const camera = new THREE.PerspectiveCamera(
+            this.fov, window.innerWidth / window.innerHeight, this.near, this.far   //화각
+        );
+        camera.position.set(this.pos_x, this.pos_y, this.pos_z);  //좌 우, 앞 뒤 ,상 하
+        camera.rotation.set(this.rot_x, this.rot_y, this.rot_z);  //수직, 수평, 회전
 
-    const camera = new THREE.PerspectiveCamera(
-        this.fov, window.innerWidth / window.innerHeight, this.near, this.far   //화각
-    );
-    camera.position.set(this.pos_x, this.pos_y, this.pos_z);  //좌 우, 앞 뒤 ,상 하
-    camera.rotation.set(this.rot_x, this.rot_y, this.rot_z);  //수직, 수평, 회전
-
-    return camera;
+        return camera;
     }
 }
 
-export default camera_builder;
+export { CameraBuilder };

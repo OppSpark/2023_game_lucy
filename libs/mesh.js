@@ -1,36 +1,40 @@
 import * as THREE from '../source/three.module.js';
 
-const makeMesh = () => {
-    const geometry = new THREE.BoxGeometry(2, 2, 2);
-    const material = new THREE.MeshBasicMaterial({color: 0xffdd33});
-    const mesh = new THREE.Mesh(geometry, material);
-    mesh.position.set(0, 0, -10);
-    mesh.rotation.set(- Math.PI / 2, 0, 0);
+// const makeMesh = () => {
+//     const geometry = new THREE.BoxGeometry(2, 2, 2);
+//     const material = new THREE.MeshBasicMaterial({color: 0xffdd33});
+//     const mesh = new THREE.Mesh(geometry, material);
+//     mesh.position.set(0, 0, -10);
+//     mesh.rotation.set(- Math.PI / 2, 0, 0);
 
-    return mesh;
-}
+//     return mesh;
+// }
 
-const makeMesh2 = () => {
-    const geometry = new THREE.PlaneGeometry(30, 30);
-    const material = new THREE.MeshStandardMaterial({color: 0xffffff});
-    const mesh = new THREE.Mesh(geometry, material);
-    mesh.position.set(0, 0, -14);
+// const makeMesh2 = () => {
+//     const geometry = new THREE.PlaneGeometry(30, 30);
+//     const material = new THREE.MeshStandardMaterial({color: 0xffffff});
+//     const mesh = new THREE.Mesh(geometry, material);
+//     mesh.position.set(0, 0, -14);
 
-    return mesh;
-}
+//     return mesh;
+// }
 
-const makeMesh3 = () => {
-    const geometry = new THREE.BoxGeometry(5,5);
-    const material = new THREE.MeshPhongMaterial({color: 0xffffff});
-    const mesh = new THREE.Mesh(geometry, material);
-    mesh.position.set(0, 0, -10);
-    mesh.rotation.set(- Math.PI / 2, 0, 0);
+// const makeMesh3 = () => {
+//     const geometry = new THREE.BoxGeometry(5,5);
+//     const material = new THREE.MeshPhongMaterial({color: 0xffffff});
+//     const mesh = new THREE.Mesh(geometry, material);
+//     mesh.position.set(0, 0, -10);
+//     mesh.rotation.set(- Math.PI / 2, 0, 0);
 
-    return mesh;
-}
+//     return mesh;
+// }
 
 // Mesh 생성 클래스
-class MeshBuilder {
+export class MeshBuilder {
+    // 1. position, rotation, scale을 한번에 설정할 수 있도록 합니다.
+    // 2. sprite의 경우 독립적인 타입이므로 mattype이 아니라 type으로 설정합니다.
+
+
     // 생성자에서 필요값 초기화
     constructor() {
         this.type = 'box';
@@ -201,4 +205,4 @@ class MeshBuilder {
     }
 }
 
-export { makeMesh, makeMesh2, makeMesh3, MeshBuilder };
+export { MeshBuilder };
