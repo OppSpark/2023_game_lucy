@@ -4,7 +4,7 @@ console.warn( 'Scripts "build/three.js" and "build/three.min.js" are deprecated 
  * Copyright 2010-2023 Three.js Authors
  * SPDX-License-Identifier: MIT
  */
-(function (global, factory) {
+(function (grbal, factory) {
 	typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
 	typeof define === 'function' && define.amd ? define(['exports'], factory) :
 	(global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global.THREE = {}));
