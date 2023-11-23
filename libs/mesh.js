@@ -77,38 +77,18 @@ export class MeshBuilder {
         return this;
     }
 
-    // 생성객체의 x 좌표 설정
-    setPosX(x) {
+    // 생성객체의 좌표 설정
+    setPos(x = 1, y = 1, z = 1) {
         this.posX = x;
-        return this;
-    }
-
-    // 생성객체의 y 좌표 설정
-    setPosY(y) {
         this.posY = y;
-        return this;
-    }
-
-    // 생성객체의 z 좌표 설정
-    setPosZ(z) {
         this.posZ = z;
         return this;
     }
 
-    // 생성객체의 x축 회전 설정
-    setRotX(x) {
+    // 생성객체의 좌표 설정
+    setRot(x = 1, y = 1, z = 1) {
         this.rotX = x;
-        return this;
-    }
-
-    // 생성객체의 y축 회전 설정
-    setRotY(y) {
         this.rotY = y;
-        return this;
-    }
-
-    // 생성객체의 z축 회전 설정
-    setRotZ(z) {
         this.rotZ = z;
         return this;
     }
@@ -185,17 +165,17 @@ export class MeshBuilder {
             this.geometry = new THREE.SphereGeometry(this.radius);
         } else if(this.type == 'ring') {
             this.geometry = new THREE.RingGeometry(this.innerRadius, this.outerRadius);
+        } else if(this.type == 'sprite') {
+            this.material = new THREE.SpriteMaterial();
         }
 
-        if(this.matType == 'sprite') {
-            this.material = new THREE.SpriteMaterial();
-        } else if(this.matType == 'standard') {
+        if(this.matType == 'standard') {
             this.material = new THREE.MeshStandardMaterial(this.color);
         } else if(this.matType == 'phong') {
             this.material = new THREE.MeshPhongMaterial(this.color);
         }
 
-        if(this.matType == 'sprite') {
+        if(this.type == 'sprite') {
             this.mesh = new THREE.Sprite(this.material);
         } else {
             this.mesh = new THREE.Mesh(this.geometry, this.material);
@@ -204,3 +184,5 @@ export class MeshBuilder {
         return this.mesh;
     }
 }
+
+export { MeshBuilder };
