@@ -13,36 +13,25 @@ const playscene1 = async (renderer) => {
 
     /*
     * ==================[작동 방식]==================
-    *
     *    .setFov(110) 화각을 설정합니다.
     *    .setNear()     근접평면을 설정합니다.
     *    .setFar()      원격평면을 설정합니다.
     *    .setPosX()     카메라 X좌표를 설정합니다.
     *    .setPosY()     카메라 Y좌표를 설정합니다.
     *    .setPosZ()     카메라 Z좌표를 설정합니다.
+    *    .setPosXYZ(x, y, z)  X Y Z 좌표값을 한번에 설정합니다.
     *    .setRotX()     카메라 X축 회전을 설정합니다.
     *    .setRotY()     카메라 Y축 회전을 설정합니다.
     *    .setRotZ()     카메라 Z축 회전을 설정합니다.
+    *    .setRotXYZ(x, y, z) X Y Z 좌표값을 한번에 설정합니다.
     *    .build(); 
-    * 
     */
 
     // 카메라 생성
-    const cameraBuilder = new camera_builder(); // Create an instance of camera_builder
-    const camera = cameraBuilder
-    /*
-    .setFov(110)
-    .setNear()
-    .setFar()
-    .setPosX()
-    .setPosY()
-    .setPosZ()
-    .setRotX()
-    .setRotY()
-    .setRotZ()
-    */
+    const camera1 = new CameraBuilder()
     .build();
-
+    scene1.add(camera1);
+    
     // 라이트 생성
     const light = makelight();
     scene1.add(light);
@@ -72,7 +61,7 @@ const playscene1 = async (renderer) => {
         .build();
     scene1.add(bg);
     
-    let tick = 0;
+    let tick = 0;       
 
     const rockmananim = new pngAnimBuilder(sprite, '../img/testrockman.png')
         .setHorizontal(5)

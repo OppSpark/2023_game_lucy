@@ -204,5 +204,3 @@ export class MeshBuilder {
         return this.mesh;
     }
 }
-
-export { MeshBuilder };

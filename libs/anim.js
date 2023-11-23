@@ -49,6 +49,5 @@ export class pngAnimBuilder{
 
 }
 
-export { pngAnimBuilder };
 // sepAnimbuilder
 // coloranimbuilder

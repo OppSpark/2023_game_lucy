@@ -1,8 +1,14 @@
 import * as THREE from '../source/three.module.js';
 
+/*
+const makeCamera = () => {
+    const camera = new THREE.OrthographicCamera(width / - 2, width / 2, height / 2, height / - 2, 1, 1000 );
+    scene.add(camera);
+}
+*/
+
 export class CameraBuilder {
     // 1. PerspectiveCamera 이외의 카메라도 지원하도록 합니다
-    // 2. position, rotation을 한번에 설정할 수 있도록 합니다
     constructor(){
         this.fov = 75;
         this.near = 0.1;
@@ -32,6 +38,7 @@ export class CameraBuilder {
         return this;
     }
 
+
     setPosX(pos_x){
         this.pos_x = pos_x;
         return this;
@@ -43,6 +50,13 @@ export class CameraBuilder {
     }
     
     setPosZ(pos_z){
+        this.pos_z = pos_z;
+        return this;
+    }
+
+    setPosXYZ(pos_x, pos_y, pos_z){
+        this.pos_x =  pos_x;
+        this.pos_y = pos_y;
         this.pos_z = pos_z;
         return this;
     }
@@ -62,6 +76,13 @@ export class CameraBuilder {
         return this;
     }
 
+    setRotXYZ(rot_x, rot_y, rot_z){
+        this.rot_x = rot_x;
+        this.rot_y = rot_y;
+        this.rot_z = rot_z;
+        return this;
+    }
+
     build(){
         const camera = new THREE.PerspectiveCamera(
             this.fov, window.innerWidth / window.innerHeight, this.near, this.far   //화각
@@ -72,5 +93,3 @@ export class CameraBuilder {
         return camera;
     }
 }
-
-export { CameraBuilder };
