@@ -1,7 +1,7 @@
 import * as THREE from '../source/three.module.js';
 import { MeshBuilder } from '../libs/mesh.js';
 import { CameraBuilder } from '../libs/camera.js';
-import { KerboradBuilder } from '../libs/keyboardEvent.js';
+import { KeyboardBuilder } from '../libs/keyboardEvent.js';
 import { CameraBuilder2 } from '../libs/camera2.js';
 import { pngAnimBuilder } from '../libs/anim.js';
 import makelight from '../libs/light.js';
