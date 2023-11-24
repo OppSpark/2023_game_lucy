@@ -8,4 +8,36 @@
 *
 */
 
+let key = {};
 
+class  builder () => {
+    constructor() {
+        this.key = key;
+    }
+    setKey(key, anim) {
+        key= key;
+        function = function;
+        return this;
+    }
+    seanim() {
+
+    }
+    build(){
+        for(let i = 0; i < key.length; i++){
+            if(key[i] == keyw){
+                anim();
+            }
+        }
+
+        return 함수타입
+    }
+}
+
+const key = new builder().setKey('w', () => {}).setKey('d', () => {}).setKey('s', () => {}).setKey('a', () => {}).build();
+
+
+
+document.addEventListener('keydown', (event) => {
+    const keyName = event.key;
+    key = keyName;
+});
