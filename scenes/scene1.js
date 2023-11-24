@@ -1,6 +1,8 @@
 import * as THREE from '../source/three.module.js';
 import { MeshBuilder } from '../libs/mesh.js';
 import { CameraBuilder } from '../libs/camera.js';
+import { KerboradBuilder } from '../libs/keyboardEvent.js';
+import { CameraBuilder2 } from '../libs/camera2.js';
 import { pngAnimBuilder } from '../libs/anim.js';
 import makelight from '../libs/light.js';
 import { DragControls } from '../source/controls/DragControls.js';
@@ -35,7 +37,27 @@ const playscene1 = async (renderer) => {
         .setPosXYZ(0, 0, 10)
     .build();
     scene1.add(camera1);
+
+
+    //카메라 2 입니다.
+    let camera = new CameraBuilder2()
+    .setLeft(-1)
+    .setRight(1)
+    .setTop(1)
+    .setBottom(-1)
+    .setNear(-1)
+    .setFar(1)
+    .build();
     
+
+
+    
+    keyboardInput = new KeyboardBuilder()
+    .setKey('d', () => {console.log('성공')})
+    .build();
+
+
+
     // 라이트 생성
     const light = makelight();
     scene1.add(light);
