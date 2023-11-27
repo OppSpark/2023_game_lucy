@@ -2,6 +2,7 @@ import * as THREE from '../source/three.module.js';
 import { MeshBuilder } from '../libs/mesh.js';
 import { CameraBuilder } from '../libs/camera.js';
 import { KeyboardBuilder } from '../libs/keyboardEvent.js';
+import { MouseRaycasterBuilder, MouseRaycaster } from '../libs/mouseEvent.js';
 import { CameraBuilder2 } from '../libs/camera2.js';
 import { pngAnimBuilder } from '../libs/anim.js';
 import makelight from '../libs/light.js';
@@ -48,15 +49,15 @@ const playscene1 = async (renderer) => {
     .setNear(-1)
     .setFar(1)
     .build();
-    
-
 
     
     keyboardInput = new KeyboardBuilder()
     .setKey('d', () => {console.log('성공')})
     .build();
 
-
+    mouseInput = new MouseRaycasterBuilder(scene1, camera)
+    .onMouseWheel()
+    .build();
 
     // 라이트 생성
     const light = makelight();

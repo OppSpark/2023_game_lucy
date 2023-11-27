@@ -1,7 +1,5 @@
 import * as THREE from '../source/three.module.js';
 
-
-
 // =============================================
 // 해당 변수를 빌더패턴으로 제작합니다.
 /*
@@ -12,8 +10,6 @@ const makeCamera = () => {
 */
 
 // =============================================
-
-
 
 export class CameraBuilder2 {
     constructor() {
