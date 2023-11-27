@@ -2,7 +2,7 @@ import * as THREE from '../source/three.module.js';
 import { MeshBuilder } from '../libs/mesh.js';
 import { CameraBuilder } from '../libs/camera.js';
 import { pngAnimBuilder } from '../libs/anim.js';
-import makelight from '../libs/light.js';
+import { LightBuilder } from '../libs/light.js';
 import { DragControls } from '../source/controls/DragControls.js';
 import { FirstPersonControls } from '../source/controls/FirstPersonControls.js';
 import { PointerLockControls } from '../source/controls/PointerLockControls.js';
@@ -13,6 +13,7 @@ const playscene1 = async (renderer) => {
 
     // 씬 생성
     const scene1 = new THREE.Scene();
+    scene1.background = new THREE.Color(0x00ff00);
 
     /*
     * ==================[작동 방식]==================
@@ -32,12 +33,19 @@ const playscene1 = async (renderer) => {
 
     // 카메라 생성
     const camera1 = new CameraBuilder()
-        .setPosXYZ(0, 0, 10)
+        .setPosXYZ(0, 0, 20)
+        .setLookXYZ(0, 0, 0)
     .build();
     scene1.add(camera1);
     
     // 라이트 생성
-    const light = makelight();
+    const light = new LightBuilder()
+        .setType('point')
+        .setColor(0xffffff)
+        .setIntensity(1)
+        .setDistance(0)
+        .setPosition(0, 0, 0)
+        .build();
     scene1.add(light);
 
     // 메쉬 생성
@@ -55,16 +63,21 @@ const playscene1 = async (renderer) => {
     //scene1.add(mesh2);
     //scene1.add(mesh3);
 
-    // 배경 추가
-    const bg = new MeshBuilder()
+    // 이미지 텍스처 생성
+    const texture = new THREE.TextureLoader().load('../img/Train_in.png');
+
+    // 바닥 추가
+    const floor = new MeshBuilder()
         .setType('plane')
         .setMaterial('standard')
-        .setColor(0x00ffff)
+        .setColor(texture) 
         .setWidth(30)
         .setHeight(30)
         // .setPosX(0).setPosY(0).setPosZ(-14)
         .build();
-    scene1.add(bg);
+
+    scene1.add(floor);
+
     
     let tick = 0;       
 

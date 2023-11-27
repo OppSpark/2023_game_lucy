@@ -10,6 +10,8 @@ const makeCamera = () => {
 export class CameraBuilder {
     // 1. PerspectiveCamera 이외의 카메라도 지원하도록 합니다
     constructor(){
+        this.type = 'perspective';
+
         this.fov = 75;
         this.near = 0.1;
         this.far = 1000;
@@ -21,6 +23,15 @@ export class CameraBuilder {
         this.rot_x = Math.PI / 5;
         this.rot_y = 0;
         this.rot_z = 0;
+
+        this.look_x = 0;
+        this.look_y = 0;
+        this.look_z = 0;
+    }
+
+    setType(type){
+        this.type = type;
+        return this;
     }
 
     setFov(fov){
@@ -83,12 +94,35 @@ export class CameraBuilder {
         return this;
     }
 
+    setLookX(look_x){
+        this.look_x = look_x;
+        return this;
+    }
+
+    setLookY(look_y){
+        this.look_y = look_y;
+        return this;
+    }
+
+    setLookZ(look_z){
+        this.look_z = look_z;
+        return this;
+    }
+
+    setLookXYZ(look_x, look_y, look_z){
+        this.look_x = look_x;
+        this.look_y = look_y;
+        this.look_z = look_z;
+        return this;
+    }
+
     build(){
         const camera = new THREE.PerspectiveCamera(
             this.fov, window.innerWidth / window.innerHeight, this.near, this.far   //화각
         );
         camera.position.set(this.pos_x, this.pos_y, this.pos_z);  //좌 우, 앞 뒤 ,상 하
         camera.rotation.set(this.rot_x, this.rot_y, this.rot_z);  //수직, 수평, 회전
+        camera.lookAt(this.look_x, this.look_y, this.look_z);  //카메라가 바라보는 방향
 
         return camera;
     }
