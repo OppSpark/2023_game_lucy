@@ -2,6 +2,7 @@ import * as THREE from '../source/three.module.js';
 import { MeshBuilder } from '../libs/mesh.js';
 import { CameraBuilder } from '../libs/camera.js';
 import { pngAnimBuilder } from '../libs/anim.js';
+import { AudioBuilder } from '../libs/audio.js';
 import makelight from '../libs/light.js';
 import { DragControls } from '../source/controls/DragControls.js';
 import { FirstPersonControls } from '../source/controls/FirstPersonControls.js';
@@ -29,6 +30,24 @@ const playscene1 = async (renderer) => {
     *    .setRotXYZ(x, y, z) X Y Z 좌표값을 한번에 설정합니다.
     *    .build(); 
     */
+
+    function onUserInteration() {
+        audio.play();
+        document.removeEventListener('click', onUserInteration);
+    }
+
+    // 사운드 생성
+    const audio = new AudioBuilder()
+        .loadSound('./audio/Title.wav', () => {
+            document.addEventListener('click', onUserInteration);
+            console.log('success');
+        })
+        .setVolume(1)
+        .setLoop(true)
+        .build();
+    
+    scene1.add(audio);
+
 
     // 카메라 생성
     const camera1 = new CameraBuilder()
