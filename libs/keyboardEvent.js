@@ -1,9 +1,18 @@
-/*
-* 키보드 입력 구현할 목록
-*
-* 1. 키보드 입력 시 어떤 값이 입력이 되었는지 확인 하는것 (consol.log() 로 출력)
-* 2. 특정 키 ex) " (W) " 를 설정하고 W 입력 시 consol.log() 로 출력,  다른 키 입력시 반응 X
-* 3. 특정 키를 2번(연타) 시 출력
-* 4. 특정 키를 ex) "(W) + (D)" 를 동시에 누르면 출력
-*
-*/
+export class KeyboardBuilder{
+    constructor(){
+        this.input = {};
+    }
+    setKey(input, content ){
+        this.input[input] = content;
+        return this;
+    }
+    build(){
+        document.addEventListener('keydown', (event) => {
+            const KeyInput = event.key;
+            if(this.input[KeyInput]){
+                this.input[KeyInput]();
+            }
+        });
+        return this;
+    }
+}

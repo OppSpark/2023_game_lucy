@@ -1,6 +1,7 @@
 import * as THREE from '../source/three.module.js';
 import { MeshBuilder } from '../libs/mesh.js';
 import { CameraBuilder } from '../libs/camera.js';
+import { KeyboardBuilder } from '../libs/keyboardEvent.js';
 import { pngAnimBuilder } from '../libs/anim.js';
 import { LightBuilder } from '../libs/light.js';
 import { DragControls } from '../source/controls/DragControls.js';
@@ -15,29 +16,24 @@ const playscene1 = async (renderer) => {
     const scene1 = new THREE.Scene();
     scene1.background = new THREE.Color(0x00ff00);
 
-    /*
-    * ==================[작동 방식]==================
-    *    .setFov(110) 화각을 설정합니다.
-    *    .setNear()     근접평면을 설정합니다.
-    *    .setFar()      원격평면을 설정합니다.
-    *    .setPosX()     카메라 X좌표를 설정합니다.
-    *    .setPosY()     카메라 Y좌표를 설정합니다.
-    *    .setPosZ()     카메라 Z좌표를 설정합니다.
-    *    .setPosXYZ(x, y, z)  X Y Z 좌표값을 한번에 설정합니다.
-    *    .setRotX()     카메라 X축 회전을 설정합니다.
-    *    .setRotY()     카메라 Y축 회전을 설정합니다.
-    *    .setRotZ()     카메라 Z축 회전을 설정합니다.
-    *    .setRotXYZ(x, y, z) X Y Z 좌표값을 한번에 설정합니다.
-    *    .build(); 
-    */
 
     // 카메라 생성
     const camera1 = new CameraBuilder()
         .setPosXYZ(0, 0, 20)
         .setLookXYZ(0, 0, 0)
+    // 카메라 생성 
+    let camera = new CameraBuilder()
+    .setCameraType('Perspective') //카메라 타입 설정 (Perspective, Orthographic ) 2가지가 있습니다.
     .build();
-    scene1.add(camera1);
-    
+
+
+    //키보드 입력
+    let keyboardInput = new KeyboardBuilder()  //키보드 입력입니다. 해당 키를 누르면 괄호 안 값을 받아옵니다.
+    .setKey('T', () => {console.log('성공[T]')})  
+    .setKey('U', () => {console.log('성공[U]')})
+    .build();
+
+
     // 라이트 생성
     const light = new LightBuilder()
         .setType('point')
@@ -93,7 +89,7 @@ const playscene1 = async (renderer) => {
     // controls.lookSpeed = 0.005;
 
     // pointerlock 컨트롤은 마우스가 움직일떄만 회전함
-    const controls = new PointerLockControls(camera1, renderer.domElement);
+    const controls = new PointerLockControls(camera, renderer.domElement);
     controls.movementSpeed = 0.5;
     controls.lookSpeed = 0.005;
 
@@ -103,7 +99,7 @@ const playscene1 = async (renderer) => {
     }, false);
 
     // DragControls는 마우스로 메쉬를 드래그할 수 있음
-    const dragControls = new DragControls([mesh1], camera1, renderer.domElement);
+    const dragControls = new DragControls([mesh1], camera, renderer.domElement);
 
     // 키입력을 받기 위한 객체
     let keys = {
@@ -140,7 +136,7 @@ const playscene1 = async (renderer) => {
         // console.log(tick);
 
         // 렌더링 및 프레임 갱신 블로킹
-        renderer.render(scene1, camera1);
+        renderer.render(scene1, camera);
         await new Promise((res) => {
             requestAnimationFrame(res);
         });
