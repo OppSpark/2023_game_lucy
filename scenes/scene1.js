@@ -4,6 +4,8 @@ import { CameraBuilder } from '../libs/camera.js';
 import { KeyboardBuilder } from '../libs/keyboardEvent.js';
 import { pngAnimBuilder } from '../libs/anim.js';
 import { LightBuilder } from '../libs/light.js';
+import { AudioBuilder } from '../libs/audio.js';
+import makelight from '../libs/light.js';
 import { DragControls } from '../source/controls/DragControls.js';
 import { FirstPersonControls } from '../source/controls/FirstPersonControls.js';
 import { PointerLockControls } from '../source/controls/PointerLockControls.js';
@@ -15,6 +17,24 @@ const playscene1 = async (renderer) => {
     // 씬 생성
     const scene1 = new THREE.Scene();
     scene1.background = new THREE.Color(0x00ff00);
+
+
+    function onUserInteration() {
+        audio.play();
+        document.removeEventListener('click', onUserInteration);
+    }
+
+    // 사운드 생성
+    const audio = new AudioBuilder()
+        .loadSound('./audio/Title.wav', () => {
+            document.addEventListener('click', onUserInteration);
+            console.log('success');
+        })
+        .setVolume(1)
+        .setLoop(true)
+        .build();
+    
+    scene1.add(audio);
 
 
     // 카메라 생성
