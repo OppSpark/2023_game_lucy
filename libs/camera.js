@@ -1,78 +1,66 @@
 import * as THREE from '../source/three.module.js';
 
+/*
+CameraBuilder
+    .setType() 라이트 타입을 설정합니다. (Perspective, Orthographic)
 
+Perspective
+    .setFov()       시야각을 설정합니다. (기본값 75, 단위는 degree)
+    .setAspect()    카메라의 종횡비를 설정합니다. (기본값 window.innerWidth / window.innerHeight)
+    .setNear()      카메라가 볼 수 있는 가장 가까운 거리를 설정합니다. (기본값 0.1, 단위는 meter)
+    .setFar()       카메라가 볼 수 있는 가장 먼 거리를 설정합니다. (기본값 1000, 단위는 meter)
+    .setPosX()      카메라 X좌표를 설정합니다. (기본값 0, 단위는 meter)
+    .setPosY()      카메라 Y좌표를 설정합니다. (기본값 0, 단위는 meter)
+    .setPosZ()      카메라 Z좌표를 설정합니다. (기본값 0, 단위는 meter)
+    .setPos(x, y, z)    X Y Z 좌표값을 한번에 설정합니다.
+    .setRotX()      카메라 X축 회전을 설정합니다. (기본값 0, 단위는 radian)
+    .setRotY()      카메라 Y축 회전을 설정합니다. (기본값 0, 단위는 radian)
+    .setRotZ()      카메라 Z축 회전을 설정합니다. (기본값 0, 단위는 radian)
+    .setRot(x, y, z) X Y Z 좌표값을 한번에 설정합니다.
+    .setDirX()      카메라가 바라보는 x축 방향을 설정합니다. (기본값 0, 벡터값)
+    .setDirY()      카메라가 바라보는 y축 방향을 설정합니다. (기본값 0, 벡터값)
+    .setDirZ()      카메라가 바라보는 z축 방향을 설정합니다. (기본값 0, 벡터값)
+    .setDir(x, y, z) X Y Z 좌표값을 한번에 설정합니다.
 
-    /*
-    * 기초 설명
-    * THREE.js 에서 제공하는 카메라 모듈은 2가지가 있습니다.
-    * Perspective와 Orthographic 가 있습니다
+Orthographic
+    .setBoundL()      시야 영역 왼쪽 경계를 나타낸다.
+    .setBoundR()     시야 영역 오른쪽 경계를 나타낸다.
+    .setBoundT()       시야 위쪽 경계를 나타낸다.
+    .setBoundB()    시야 아랫쪽 경계를 나타낸다.
+    .setBound(left, right, top, bottom)   시야 영역의 경계를 한번에 설정합니다.
 
-    * ==================[작동 방식]==================
-    Perspective
-    *    .setFov(110) 화각을 설정합니다.
-    *    .setNear()     근접평면을 설정합니다.
-    *    .setFar()      원격평면을 설정합니다.
-    *    .setPosX()     카메라 X좌표를 설정합니다.
-    *    .setPosY()     카메라 Y좌표를 설정합니다.
-    *    .setPosZ()     카메라 Z좌표를 설정합니다.
-    *    .setPosXYZ(x, y, z)  X Y Z 좌표값을 한번에 설정합니다.
-    *    .setRotX()     카메라 X축 회전을 설정합니다.
-    *    .setRotY()     카메라 Y축 회전을 설정합니다.
-    *    .setRotZ()     카메라 Z축 회전을 설정합니다.
-    *    .setRotXYZ(x, y, z) X Y Z 좌표값을 한번에 설정합니다.
-    *    .build(); 
-    * 
-    * 
-    Orthographic
-    *   .setLeft() 시야 영역 왼쪽 경계를 나타낸다.
-    *   .setRight() 시야 영역 오른ㄴ쪽 경계를 나타낸다.
-    *   .setTop()  시야 위쪽 경계를 나타낸다.
-    *   .setBottom()  시야 아랫쪽 경계를 나타낸다.
-    *   .setNear()  시야 가까운 거리를 나타낸다.
-    *   .setFar()  시야 먼 거리를 나타낸다.
-    *   .build
-    *
-
-    * 
-    */
+build
+    .build() 카메라를 생성합니다.
+*/
 
 
 export class CameraBuilder {
-    // 1. PerspectiveCamera 이외의 카메라도 지원하도록 합니다
-    constructor(){
-        this.type = 'perspective';
+    constructor() {
+        this.type = 'Perspective';
 
         this.fov = 75;
+        this.aspect = window.innerWidth / window.innerHeight;
         this.near = 0.1;
         this.far = 1000;
-        this.pos_x = 0;
-        this.pos_y = -5;
-        this.pos_z = 0;
-        this.rot_x = Math.PI / 5;
-        this.rot_y = 0;
-        this.rot_z = 0;
+        this.pos = {x: 0, y: 0, z: 0};
+        this.rot = {x: 0, y: 0, z: 0};
+        this.dir = {x: 0, y: 0, z: 0};
 
-        this.look_x = 0;
-        this.look_y = 0;
-        this.look_z = 0;
+        this.border = {left: 0, right: 0, top: 0, bottom: 0};
     }
 
     setType(type){
         this.type = type;
         return this;
-        this.left = 0;
-        this.right = 0;
-        this.top = 0;
-        this.bottom = 0;
-    }
-
-    setCameraType(cameraType) {
-        this.cameraType = cameraType;
-        return this;
     }
 
     setFov(fov) {
         this.fov = fov;
+        return this;
+    }
+
+    setAspect(aspect) {
+        this.aspect = aspect;
         return this;
     }
 
@@ -86,25 +74,28 @@ export class CameraBuilder {
         return this;
     }
 
+    setPos(pos_x, pos_y, pos_z) {
+        this.pos = {x: pos_x, y: pos_y, z: pos_z};
+        return this;
+    }
+
     setPosX(pos_x) {
-        this.pos_x = pos_x;
+        this.pos.x = pos_x;
         return this;
     }
 
     setPosY(pos_y) {
-        this.pos_y = pos_y;
+        this.pos.y = pos_y;
         return this;
     }
 
     setPosZ(pos_z) {
-        this.pos_z = pos_z;
+        this.pos.z = pos_z;
         return this;
     }
 
-    setPosXYZ(pos_x, pos_y, pos_z) {
-        this.pos_x = pos_x;
-        this.pos_y = pos_y;
-        this.pos_z = pos_z;
+    setRot(rot_x, rot_y, rot_z) {
+        this.rot = {x: rot_x, y: rot_y, z: rot_z};
         return this;
     }
 
@@ -123,71 +114,71 @@ export class CameraBuilder {
         return this;
     }
 
-    setRotXYZ(rot_x, rot_y, rot_z) {
-        this.rot_x = rot_x;
-        this.rot_y = rot_y;
-        this.rot_z = rot_z;
+    setDir(dir_x, dir_y, dir_z){
+        this.dir = {x: dir_x, y: dir_y, z: dir_z};
         return this;
     }
 
-    setLookX(look_x){
-        this.look_x = look_x;
+    setDirX(dir_x){
+        this.dir.x = dir_x;
         return this;
     }
 
-    setLookY(look_y){
-        this.look_y = look_y;
+    setDirY(dir_y){
+        this.dir.y = dir_y;
         return this;
     }
 
-    setLookZ(look_z){
-        this.look_z = look_z;
+    setDirZ(dir_z){
+        this.dir.z = dir_z;
         return this;
     }
 
-    setLookXYZ(look_x, look_y, look_z){
-        this.look_x = look_x;
-        this.look_y = look_y;
-        this.look_z = look_z;
+    setBound(left, right, top, bottom){
+        this.border = {left: left, right: right, top: top, bottom: bottom};
         return this;
     }
 
-    build(){
-        const camera = new THREE.PerspectiveCamera(
-            this.fov, window.innerWidth / window.innerHeight, this.near, this.far   //화각
-        );
-        camera.position.set(this.pos_x, this.pos_y, this.pos_z);  //좌 우, 앞 뒤 ,상 하
-        camera.rotation.set(this.rot_x, this.rot_y, this.rot_z);  //수직, 수평, 회전
-        camera.lookAt(this.look_x, this.look_y, this.look_z);  //카메라가 바라보는 방향
-    setLeft(left) {
-        this.left = left;
+    setBoundL(left){
+        this.border.left = left;
         return this;
     }
 
-    setRight(right) {
-        this.right = right;
+    setBoundR(right){
+        this.border.right = right;
         return this;
     }
 
-    setTop(top) {
-        this.top = top;
+    setBoundT(top){
+        this.border.top = top;
         return this;
     }
 
-    setBottom(bottom) {
-        this.bottom = bottom;
+    setBoundB(bottom){
+        this.border.bottom = bottom;
         return this;
     }
 
     build() {
         let camera;
-        if (this.cameraType === 'Perspective') {
-            camera = new THREE.PerspectiveCamera(this.fov, window.innerWidth / window.innerHeight, this.near, this.far);
-        } else if (this.cameraType === 'Orthographic') {
-            camera = new THREE.OrthographicCamera(this.left, this.right, this.top, this.bottom, this.near, this.far);
+
+        if (this.type === 'Perspective') {
+            camera = new THREE.PerspectiveCamera(
+                this.fov, this.aspect, this.near, this.far
+            );
+
+            camera.lookAt(this.dir.x, this.dir.y, this.dir.z);
+
+        } else if (this.type === 'Orthographic') {
+            camera = new THREE.OrthographicCamera(
+                this.border.left, this.border.right, this.border.top, this.border.bottom, this.near, this.far
+            );
+
         }
-        camera.position.set(this.pos_x, this.pos_y, this.pos_z);
-        camera.rotation.set(this.rot_x, this.rot_y, this.rot_z);
+        
+        camera.position.set(this.pos.x, this.pos.y, this.pos.z);
+        camera.rotation.set(this.rot.x, this.rot.y, this.rot.z);
+
         return camera;
     }
 }

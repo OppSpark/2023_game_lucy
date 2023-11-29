@@ -1,62 +1,16 @@
 import * as THREE from '../source/three.module.js';
 
-// const makeMesh = () => {
-//     const geometry = new THREE.BoxGeometry(2, 2, 2);
-//     const material = new THREE.MeshBasicMaterial({color: 0xffdd33});
-//     const mesh = new THREE.Mesh(geometry, material);
-//     mesh.position.set(0, 0, -10);
-//     mesh.rotation.set(- Math.PI / 2, 0, 0);
-
-//     return mesh;
-// }
-
-// const makeMesh2 = () => {
-//     const geometry = new THREE.PlaneGeometry(30, 30);
-//     const material = new THREE.MeshStandardMaterial({color: 0xffffff});
-//     const mesh = new THREE.Mesh(geometry, material);
-//     mesh.position.set(0, 0, -14);
-
-//     return mesh;
-// }
-
-// const makeMesh3 = () => {
-//     const geometry = new THREE.BoxGeometry(5,5);
-//     const material = new THREE.MeshPhongMaterial({color: 0xffffff});
-//     const mesh = new THREE.Mesh(geometry, material);
-//     mesh.position.set(0, 0, -10);
-//     mesh.rotation.set(- Math.PI / 2, 0, 0);
-
-//     return mesh;
-// }
-
 // Mesh 생성 클래스
 export class MeshBuilder {
-    // 1. position, rotation, scale을 한번에 설정할 수 있도록 합니다.
-    // 2. sprite의 경우 독립적인 타입이므로 mattype이 아니라 type으로 설정합니다.
-
-
-    // 생성자에서 필요값 초기화
     constructor() {
         this.type = 'box';
-        this.geometry = null;
-        this.material = null;
-        this.matType = 'standard';
-        this.width = 1;
-        this.height = 1;
-        this.depth = 1;
-        this.radius = 1;
-        this.centerRadius = 1;
-        this.upRadius = 1;
-        this.downRadius = 1;
-        this.innerRadius = 1;
-        this.outerRadius = 1;
+        this.mat_type = 'standard';
         this.color = 0xffffff;
-        this.posX = 1;
-        this.posY = 1;
-        this.posZ = 1;
-        this.rotX = 1;
-        this.rotY = 1;
-        this.rotZ = 1;
+        this.basic_size = { width: 1, height: 1, depth: 1 };
+        this.ring_size = { radius: 1, centerRadius: 1, upRadius: 1, downRadius: 1, innerRadius: 1, outerRadius: 1 };
+        this.pos = { x: 0, y: 0, z: 0 };
+        this.rot = { x: 0, y: 0, z: 0 };
+        this.imgpath = null;
     }
 
     // geometry의 타입 설정
@@ -66,7 +20,7 @@ export class MeshBuilder {
     }
 
     // material의 타입 설정
-    setMaterial(mat) {
+    setMatType(mat) {
         this.matType = mat;
         return this;
     }
@@ -78,18 +32,14 @@ export class MeshBuilder {
     }
 
     // 생성객체의 좌표 설정
-    setPos(x = 1, y = 1, z = 1) {
-        this.posX = x;
-        this.posY = y;
-        this.posZ = z;
+    setPos(pos_x, pos_y, pos_z) {
+        this.pos = { x: pos_x, y: pos_y, z: pos_z };
         return this;
     }
 
     // 생성객체의 좌표 설정
-    setRot(x = 1, y = 1, z = 1) {
-        this.rotX = x;
-        this.rotY = y;
-        this.rotZ = z;
+    setRot(rot_x, rot_y, rot_z) {
+        this.rot = { x: rot_x, y: rot_y, z: rot_z };
         return this;
     }
 
@@ -108,6 +58,16 @@ export class MeshBuilder {
     // 생성객체의 깊이 사이즈 설정
     setDepth(d) {
         this.depth = d;
+        return this;
+    }
+
+    setSize(w, h, d) {
+        this.basic_size = { width: w, height: h, depth: d };
+        return this;
+    }
+
+    setImgPath(path) {
+        this.imgpath = path;
         return this;
     }
 
@@ -149,38 +109,54 @@ export class MeshBuilder {
 
     // 객체 생성
     build() {
-        if(this.type == 'box') {
-            this.geometry = new THREE.BoxGeometry(this.width, this.height);
-        } else if(this.type == 'donut') {
-            this.geometry = new THREE.TorusGeometry(this.radius, this.centerRadius);
-        } else if(this.type == 'plane') {
-            this.geometry = new THREE.PlaneGeometry(this.width, this.height);
-        } else if(this.type == 'circle') {
-            this.geometry = new THREE.CircleGeometry(this.radius);
-        } else if(this.type == 'corn') {
-            this.geometry = new THREE.ConeGeometry(this.radius, this.height);
-        } else if(this.type == 'cylinder') {
-            this.geometry = new THREE.CylinderGeometry(this.upRadius, this.downRadius, this.height);
-        } else if(this.type == 'sphere') {
-            this.geometry = new THREE.SphereGeometry(this.radius);
-        } else if(this.type == 'ring') {
-            this.geometry = new THREE.RingGeometry(this.innerRadius, this.outerRadius);
-        } else if(this.type == 'sprite') {
-            this.material = new THREE.SpriteMaterial();
-        }
-
-        if(this.matType == 'standard') {
-            this.material = new THREE.MeshStandardMaterial(this.color);
-        } else if(this.matType == 'phong') {
-            this.material = new THREE.MeshPhongMaterial(this.color);
-        }
+        let material, geometry, mesh;
 
         if(this.type == 'sprite') {
-            this.mesh = new THREE.Sprite(this.material);
-        } else {
-            this.mesh = new THREE.Mesh(this.geometry, this.material);
-        }
+            material = new THREE.SpriteMaterial(this.color);
+            mesh = new THREE.Sprite(material);
 
-        return this.mesh;
+            if (this.imgpath != null) {
+                const texture = new THREE.TextureLoader().load(this.imgpath);
+                this.sprite.material.map = texture;
+            }
+
+            return mesh;
+        }
+        else if(this.type == 'box') {
+            geometry = new THREE.BoxGeometry(this.width, this.height);
+        } else if(this.type == 'donut') {
+            geometry = new THREE.TorusGeometry(this.radius, this.centerRadius);
+        } else if(this.type == 'plane') {
+            geometry = new THREE.PlaneGeometry(this.width, this.height);
+        } else if(this.type == 'circle') {
+            geometry = new THREE.CircleGeometry(this.radius);
+        } else if(this.type == 'corn') {
+            geometry = new THREE.ConeGeometry(this.radius, this.height);
+        } else if(this.type == 'cylinder') {
+            geometry = new THREE.CylinderGeometry(this.upRadius, this.downRadius, this.height);
+        } else if(this.type == 'sphere') {
+            geometry = new THREE.SphereGeometry(this.radius);
+        } else if(this.type == 'ring') {
+            geometry = new THREE.RingGeometry(this.innerRadius, this.outerRadius);
+        } 
+
+        if(this.matType == 'standard') {
+            material = new THREE.MeshStandardMaterial({color: this.color});
+        } else if(this.matType == 'phong') {
+            material = new THREE.MeshPhongMaterial({color: this.color});
+        } else if(this.matType == 'basic') {
+            material = new THREE.MeshBasicMaterial({color: this.color});
+        } else if(this.matType == 'line') {
+            material = new THREE.LineBasicMaterial({color: this.color});
+        } else if(this.matType == 'dashed') {
+            material = new THREE.LineDashedMaterial({color: this.color});
+        }
+            
+        mesh = new THREE.Mesh(geometry, material);
+
+        mesh.position.set(this.pos.x, this.pos.y, this.pos.z);
+        mesh.rotation.set(this.rot.x, this.rot.y, this.rot.z);
+
+        return mesh;
     }
 }
