@@ -87,13 +87,14 @@ const playscene1 = async (renderer, keys) => {
         .setKey(['d'], [(obj) => { obj.position.x += 0.1; }])
         .build();
 
+    // 모두 소문자로만 입력, 안그러면 shift + a의 경우 A가 입력되어서 키를 뗼때 a는 계속 눌린 상태로 남아있음
     const doughnut2KeyAct = new KeyEventBuilder()
-        .setKey(['ArrowUp'], [(obj) => { obj.position.y += 0.1; }])
-        .setKey(['ArrowLeft'], [(obj) => { obj.position.x -= 0.1; }])
-        .setKey(['ArrowDown'], [(obj) => { obj.position.y -= 0.1; }])
-        .setKey(['ArrowRight'], [(obj) => { obj.position.x += 0.1; }])
-        .setKey(['Shift', 'ArrowUp'], [(obj) => { obj.position.y += 0.2; }, (obj) => { obj.position.x += 0.2; }])
-        .setKey(['Shift', 'ArrowLeft'], [(obj) => { obj.position.y -= 0.2; }, (obj) => { obj.position.x -= 0.2; }])
+        .setKey(['arrowup'], [(obj) => { obj.position.y += 0.1; }])
+        .setKey(['arrowleft'], [(obj) => { obj.position.x -= 0.1; }])
+        .setKey(['arrowdown'], [(obj) => { obj.position.y -= 0.1; }])
+        .setKey(['arrowright'], [(obj) => { obj.position.x += 0.1; }])
+        .setKey(['shift', 'arrowup'], [(obj) => { obj.position.y += 0.2; }, (obj) => { obj.position.x += 0.2; }])
+        .setKey(['shift', 'arrowleft'], [(obj) => { obj.position.y -= 0.2; }, (obj) => { obj.position.x -= 0.2; }])
         .build();
     
     const camera1KeyAct = new KeyEventBuilder()
@@ -105,7 +106,6 @@ const playscene1 = async (renderer, keys) => {
 
     let tick = 0;
     while (true) {
-
         // 키보드 입력
         doughnut1KeyAct(keys, doughnut1);
         doughnut2KeyAct(keys, doughnut2);
