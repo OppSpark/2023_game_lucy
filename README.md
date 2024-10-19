@@ -31,16 +31,8 @@ three.js
 ### 기존 코드를 빌던 패턴으로 구현
 - 에니메이션
 
-<img width="764" alt="스크린샷 2023-11-17 02 37 27" src="https://github.com/OppSpark/2023_game_lucy/assets/137988657/3e3e2f8d-b4e4-41f9-bb98-3d6a541601a3">
-
-<img width="1099" alt="스크린샷 2023-11-17 02 37 39" src="https://github.com/OppSpark/2023_game_lucy/assets/137988657/bef9b530-e456-486e-bd9d-ce9619152645">
-
 
 
 
 ### 카메라 기능 구현
-<img width="1133" alt="스크린샷 2023-11-21 21 27 12" src="https://github.com/OppSpark/2023_game_lucy/assets/137988657/0e447c12-44a4-417a-b843-b21b1e827fa0">
-<img width="1115" alt="스크린샷 2023-11-21 21 27 44" src="https://github.com/OppSpark/2023_game_lucy/assets/137988657/63498bd0-1256-4bd4-ab5a-86bb4a065ac1">
-
-카마레 코드 사용
-<img width="1121" alt="스크린샷 2023-11-21 21 29 16" src="https://github.com/OppSpark/2023_game_lucy/assets/137988657/44828005-5fc8-4831-a6f4-9c5638be761c">
+- 카메라 무빙 기능
